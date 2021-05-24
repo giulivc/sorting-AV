@@ -1,0 +1,21 @@
+{
+  "name": "sorting-av",
+  "version": "1.0.0",
+  "description": "visualization of sorting algorithms - baseline",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./resources/js/index.js ./app 8000"
+
+  },
+  "author": "Giulia von Canal <giulivcanal@googlemail.com>",
+  "dependencies": {
+    "express": "^4.17.1",
+    "uuid-random": "^1.3.2",
+    "uuidv4": "^6.2.3"
+  }
+}

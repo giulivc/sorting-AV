@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "DidactGothic";
+    src: url("../fonts/DidactGothic.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+
+    height: 100%;
+    margin: 0;
+
+    background-color: #081B33;
+
+    font-family: 'DidactGothic', serif;
+    color: white;
+
+    font-size: 20px; 
+
+}
+
+
+.grid {
+
+    height: 100%;
+    width: 100%;
+
+    display: grid;
+    grid-template-areas: 
+        'title title title'
+        'array array code'
+        'array array code'
+        'array array code'
+        'footer footer footer';
+
+}
+
+.title {
+    grid-area: title;
+    text-align: center;
+    
+}
+
+.array-container { 
+    grid-area: array; 
+
+    align-self: flex-end;
+    justify-self: center;
+
+    transform: rotate(180deg);
+    transform: scaleY(-1);
+
+}
+
+
+.code-container { 
+    
+    grid-area: code; 
+    align-self: center;
+    justify-self: left;
+    
+    
+
+}
+.footer { 
+
+    grid-area: footer; 
+    background-color: #152642;
+
+    font-size: 30px;
+    text-align: center;
+    color: #ff9900;
+
+}
+
+.array-container li {
+    
+    display: block;
+    float: left;
+
+    width: 20px;
+
+    margin-right: 10px;
+
+    color: black;
+
+    list-style-type: none;
+}
+
+.unsorted {
+    background-color: white;
+}
+
+.sorted {
+    background-color: #BED733;
+}
+
+.focused {
+    background-color: #FF9900;
+}
+
+#pseudocode {
+    
+    line-height: 150%;
+    list-style-type: none;
+}
+
+#pseudocode .highlighted {
+    background-color: #FF9900;
+}
+
+#start-button {
+    width: 70px;   
+    padding-top: 30px;
+}
+
+#start-button:hover {
+    cursor: pointer;
+}
+
+#generate-new-arr {
+    background-color: #ff9900;
+    border-radius: 5px;
+}
+
+
+
+
+

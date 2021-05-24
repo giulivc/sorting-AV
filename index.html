@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="grid">
+
+        <div class="title">
+            <div></p>Sorting Visualizer</div>
+            <div style="color: #bed733; font-size: 40px;">BubbleSort</div>
+
+        </div>
+
+        
+        <div class="array-container">
+            <div id="array">
+
+            </div>
+        </div>
+
+        <div class="code-container">
+            <ul id="pseudocode">
+                <li>for (n = array.size; n > 1; --n) {</li>
+                <li style="text-indent:20px;">for (i=0; i &lt n-1; ++i) {</li>
+                <li style="text-indent:40px;">if (array[i] > array[i+1]) {</li>
+                <li style="text-indent:60px;">array.swap(i, i+1)</li>
+                <li style="text-indent:40px;">}</li>
+                <li style="text-indent:20px;">}</li>
+                <li>}</li>
+                
+            </ul>
+        </div>
+
+        <div class="footer">
+            <div>
+                <img id="start-button" src="resources/data/start-icon.png"><br>
+                <div id="button-descr">Sort</div>
+            </div>
+        </div>
+
+    </div>
+
+    
+    <script type="module" src="resources/js/index.js"></script>
+
+</body>
+
+</html>
