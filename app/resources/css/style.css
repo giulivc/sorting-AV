@@ -65,10 +65,12 @@ body {
     grid-area: code; 
     align-self: center;
     justify-self: left;
-    
-    
+     
 
 }
+
+
+
 .footer { 
 
     grid-area: footer; 
@@ -89,8 +91,7 @@ body {
 
     margin-right: 10px;
 
-    color: black;
-
+    background-color: white;
     list-style-type: none;
 }
 
@@ -108,7 +109,7 @@ body {
 
 #pseudocode {
     
-    line-height: 150%;
+    line-height: 200%;
     list-style-type: none;
 }
 
@@ -118,7 +119,7 @@ body {
 
 #start-button {
     width: 70px;   
-    padding-top: 30px;
+    padding-top: 20px;
 }
 
 #start-button:hover {
@@ -126,10 +127,86 @@ body {
 }
 
 #generate-new-arr {
-    background-color: #ff9900;
+    background-color: #FF9900;
     border-radius: 5px;
 }
 
+
+/*speed.html*/
+
+.speed-slider {
+    -webkit-appearance: none;
+
+    width: 200px;
+    height: 10px;
+
+    margin: 10px;
+
+    border-radius: 5px;  
+
+    background: #081B33;
+    
+    outline: none;
+
+  }
+  
+  .speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 20px;
+    height: 20px;
+    
+    border: 0;
+    
+    
+    background: url(../data/slider-thumb.png);
+    background-size: cover;
+   
+    cursor: pointer;
+  }
+
+
+
+/*sequencer.html*/
+
+
+#backward-button {
+    width: 20px;
+    padding: 55px 25px 25px 25px;
+}
+
+#backward-button:hover {
+    cursor: pointer;
+}
+
+
+#forward-button {
+    width: 20px;
+    padding: 55px 25px 25px 25px;
+}
+
+#forward-button:hover {
+    cursor: pointer;
+}
+
+#skip-to-start-button {
+    width: 25px;
+    padding: 55px 10px 25px 25px;
+}
+
+#skip-to-start-button:hover {
+    cursor: pointer;
+}
+
+#skip-to-end-button {
+    width: 25px;
+    padding: 55px 25px 25px 10px;
+}
+
+#skip-to-end-button:hover {
+    cursor: pointer;
+}
 
 
 

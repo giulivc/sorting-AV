@@ -9,8 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./resources/js/index.js ./app 8000"
-
+    "start": "node ./app/resources/js/index.js ./app 8000"
   },
   "author": "Giulia von Canal <giulivcanal@googlemail.com>",
   "dependencies": {
