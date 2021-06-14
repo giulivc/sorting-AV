@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="/app/resources/css/style.css">
+
+</head>
+
+<body>
+
+    <!-- #### 1 #### -->
+
+    <div id="first-page">
+
+        <div id="introduction-text">
+            <p style="font-size: x-large; color: #9980FF;">Liebe(r) StudienteilnehmerIn,</p><br>
+    
+            <p>Im Rahmen meiner Bachelorarbeit möchte ich den Lerneffekt verschiedener Interaktionsformen von Algorithmenvisualisierung untersuchen.</p>
+            
+            <p>Zunächst würde ich gerne demographische Daten von dir sammeln und anschließend sollst du einen kurzen Fragebogen zur Selbsteinschätzung ausfüllen. 
+                Danach startet die Hauptstudie: Du setzt dich nach einem kurzen Tutorial mit zwei verschiedenen Visualisierungssystemen auseinander und beantwortest 
+                anschließend jeweils ein paar Fragen über den dargestellten Sortieralgorithmus.</p>
+    
+            <p>Die Studie dauert ca. <span style="color: #9980FF;">60 Minuten</span>. </p>
+            <p>Falls du Student an der Universität Regensburg sind, kannst du am Ende der Studie deine Matrikelnummer eintragen und erhältst <span style="color: #9980FF;">1 VP</span>.<br>
+                Die erhobenen Daten werden im Rahmen meiner Bachelorarbeit ausgewertet. Die Daten sind anonymisiert und können nicht zurückverfolgt werden.</p>
+           
+            <p>Bei Fragen wende dich gerne an: Giulia.von-Canal@stud.uni-regensburg.de</p>
+    
+            <p>Um zu starten, klicke auf <span style="color: #FF9900;">Weiter</span>...</p>
+        </div>
+    
+        <button id="first-condition-button">Weiter</button>
+
+    </div>
+
+    <!-- #### 2 #### -->
+
+    <!-- #### 3 #### -->
+
+    <!-- #### 4 #### -->
+
+    <div id="visualization" style="display: none;">
+
+        <div class="grid" >
+
+            <div class="title">
+                <div></p>Sorting Visualizer</div>
+                <div id="algorithm-title">BubbleSort</div>
+                
+            </div>
+
+            <div id="data-controller" style="display: none;">
+
+                <div class="data-container">
+                    <label id="toggle">
+                        <input id="data-toggle" type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    Custom Array<br><br>
+                    <div id="random-generator">
+                        <p id="size-text">Array Size: 15</p>
+                        <input type="range" min="4" max="100" value="15" class="size-slider" id="size-setting"><br><br><br>
+                        <div id="mode-picker" style="text-align: center;">
+                            <button class="mode-button selected" id=0 >Random</button><br>
+                            <button class="mode-button" id=1 >Nearly Sorted</button><br>
+                            <button class="mode-button" id=2 >Sorted</button>
+                        </div>
+                    
+                        <br><br>
+                        <button class="generate-button" id="generate-random">Create</button>
+                    </div>
+                    <div id="custom-generator" style="display: none">
+                        <p>Enter Digits:</p>
+                        <input id="custom-input" type="text" value="29,14,17,34,8">
+                        <p id="error-text" style="visibility: hidden;">Error Message</p>
+                        <button class="generate-button" id="generate-custom">Create</button>
+                    </div>
+                    
+                    
+                </div>
+
+            </div>
+            
+            <div class="array-container">
+                <div id="array">
+                    
+                </div>
+            </div>
+    
+            <div class="code-container">
+                <ul class="pseudocode" id="bubble-sort" style="display: none;">
+                
+                    <li>for (i = 0; i &lt array.size; i++) {</li>
+                    <li style="text-indent:20px;">for (j = 0; j &lt array.size - i - 1; j++) {</li>
+                    <li style="text-indent:40px;">if (array[j] > array[j+1]) {</li>
+                    <li style="text-indent:60px;">swap(array[j], array[j+1])</li>
+                    <li style="text-indent:40px;">}</li>
+                    <li style="text-indent:20px;">}</li>
+                    <li>}</li>
+                        
+                </ul>
+
+                <ul class="pseudocode" id="insertion-sort" style="display: none;">
+
+                    <li>for (i = 0; i &lt array.size; i++) {</li>
+                    <li style="text-indent:20px;">toInsert = array[i];</li>
+                    <li style="text-indent:40px;">for (j = i; j > 0 && array[j] &lt array[j-1]; j--) {</li>
+                    <li style="text-indent:60px;">swap(array[j], array[j-1])</li>
+                    <li style="text-indent:40px;">}</li>
+                    <li style="text-indent:20px;">}</li>
+                    <li>}</li>
+        
+                </ul>
+
+                <ul class="pseudocode" id="selection-sort" style="display: none;">
+                    <li>for (i = 0; i &lt array.size; i++) {</li>
+                    <li style="text-indent:20px;">minimum = array[i];</li>
+                    <li style="text-indent:20px;">for (j = i + 1; j &lt array.size; j++) {</li>
+                    <li style="text-indent:40px;">if (minimum > array[j]) {</li>
+                    <li style="text-indent:60px;">minimum = array[j]</li>
+                    <li style="text-indent:40px;">}</li>
+                    <li style="text-indent:40px;">swap( array[i], minimum )</li>
+                    <li style="text-indent:20px;">}</li>
+                    <li>}</li>
+
+                </ul>
+            </div>
+    
+            <div class="footer" id="control-bar">
+
+                <div id="speed-controller" style="display: none;">
+                    <p style="display:inline; font-size: x-large; color: white;">slow</p>
+                    <input type="range" min="100" max="1900" value="1000" class="speed-slider" id="speed-slider">
+                    <p style="display:inline; font-size: x-large; color: white;">fast</p><br>
+                </div>
+
+                <div id="base-controller">
+                    <img class="controller-button" id="reset-button" src="/app/resources/data/reset-icon.png" style="width: 50px;">
+                    <img class="controller-button" id="start-button" src="/app/resources/data/start-icon.png">
+                    <img class="controller-button" id="pause-button" src="/app/resources/data/pause-icon.png" style="display: none;">
+                    <img class="controller-button" id="placeholder" src="/app/resources/data/reset-icon.png" style="width: 50px; visibility: hidden;">
+                    <br>
+                    <div id="button-descr">Play</div>
+
+                </div>
+                
+                <div id="step-controller" style="display: none;">
+                    <img class="sequencer-button" id="reset-button" src="/app/resources/data/skip-to-start-icon.png">
+                    <img class="sequencer-button" id="backward-button" src="/app/resources/data/backward-icon.png">
+                    <img class="controller-button" id="start-button" src="/app/resources/data/start-icon.png">
+                    <img class="controller-button" id="pause-button" src="/app/resources/data/pause-icon.png" style="display: none;">
+                    <img class="sequencer-button" id="forward-button" src="/app/resources/data/forward-icon.png">
+                    <img class="sequencer-button" id="skip-to-end-button" src="/app/resources/data/skip-to-end-icon.png">
+                    <br>
+                    <div id="button-descr">Play</div>
+                </div>
+                
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+   
+
+
+    <script type="module" src="/app/resources/js/index.js"></script>
+
+</body>
+
+</html>
