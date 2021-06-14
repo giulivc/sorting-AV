@@ -88,8 +88,6 @@ class AnimationController {
 
         this.speed = this.getAnimationSpeed();
 
-        console.log(this.speed);
-
         if(!visualizationStarted){
 
             //startVisualization

@@ -25,7 +25,7 @@ function getExperimentConditions(){
 
     //example
 
-   firstCondition = {"mode": "step-through", "algorithm": "insertion-sort"};
+   firstCondition = {"mode": "base", "algorithm": "insertion-sort"};
    secondCondition = {"mode": "step-through", "algorithm": "bubble-sort"};
 
 }

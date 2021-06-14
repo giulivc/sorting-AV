@@ -1,7 +1,3 @@
-
-var container, 
-    startButton, resetButton, pauseButton, buttonDescr;
-
 class ControllerView {
 
     getCurrentContainer(){
@@ -63,10 +59,6 @@ class ControllerView {
         buttonDescr.innerHTML = "Pause";
     
     }
-
-
-
-
 
 
 }
