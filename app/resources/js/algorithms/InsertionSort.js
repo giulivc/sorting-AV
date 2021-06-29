@@ -27,9 +27,10 @@ class InsertionSort {
 
             for (let j = i; j > 0 ; j--) {
                 
-                this.stepMatrix.push([j, j-1]);
+                this.stepMatrix.push([j, j-1, i]);
                 if(array[j] < array[j - 1]){
                     this.stepMatrix.push([true, j, j-1]);
+                    this.stepMatrix.push([false, j-1, i]);
                     [array[j], array[j - 1]] = [array[j - 1], array[j]];
                 } else {
                     break;
@@ -47,37 +48,63 @@ class InsertionSort {
 
     animateStep(step){
 
+        this.swapped = false;
+
+
         if(!this.stepMatrix[step].length){
             CodeView.highlightStep(0);
-            ArrayView.removeFocus();
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step+1][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+            
         }
 
         if(this.stepMatrix[step].length == 1 && this.stepMatrix[step][0].length != 0){
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
             ArrayView.markAsPivot(this.stepMatrix[step][0]);
             CodeView.highlightStep(1);
         }
 
         if(this.stepMatrix[step].length == 1 && this.stepMatrix[step][0].length == 0){
             CodeView.highlightStep(2);
-            ArrayView.removeFocus();
         }
 
-        if(this.stepMatrix[step].length == 2 && typeof this.stepMatrix[step][1] != "boolean"){ 
-            ArrayView.setFocusOnListItems(this.stepMatrix[step]);
+        if(this.stepMatrix[step].length == 3 && typeof this.stepMatrix[step][0] != "boolean"){ 
+            ArrayView.clear();
+            for(let i = 0; i <= this.stepMatrix[step][2]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+            ArrayView.setFocusOnListItems([this.stepMatrix[step][0], this.stepMatrix[step][1]]);
             CodeView.highlightStep(2);
         }
 
-        if(this.stepMatrix[step].length == 3){
-            
-            ArrayView.markAsPivot(this.stepMatrix[step][1]);
-            ArrayView.markListItemAsSorted(this.stepMatrix[step][2]);
+        if(this.stepMatrix[step].length == 3 && this.stepMatrix[step][0] === true){
 
             var a = ArrayView.getListItemById(this.stepMatrix[step][2]),
                 b = ArrayView.getListItemById(this.stepMatrix[step][1]);
 
             a.parentNode.insertBefore(b,a);
 
+            this.swapped = true;
+
             CodeView.highlightStep(3);
+        }
+
+        if(this.stepMatrix[step].length == 3 && this.stepMatrix[step][0] === false){
+
+            ArrayView.clear();
+            for(let i = 0; i <= this.stepMatrix[step][2]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+
+            ArrayView.markAsPivot(this.stepMatrix[step][1]);
+
+            //  CodeView.highlightStep(3); 
+
         }
 
         if(this.stepMatrix[step].length == 2 && typeof this.stepMatrix[step][1] == "boolean"){

@@ -15,6 +15,7 @@ class CodeView {
 
     }
 
+
     highlightStep(stepNum){
         let line = this.getCurrentCodeContainer().children[stepNum];
 

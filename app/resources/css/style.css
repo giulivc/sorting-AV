@@ -26,23 +26,23 @@ body {
 
 }
 
-#introduction-text {
+.information-text {
     
     padding: 50px 100px 0px 100px;
     
     color: white;
     text-align: center;
-
-    
 }
 
-#first-condition-button {
+
+
+.next-button {
 
     position: absolute;
     bottom: 0;
     right: 0;
 
-    margin: 100px;
+    margin: 50px;
 
     outline: none;
     border: 0;
@@ -61,9 +61,10 @@ body {
 
 }
 
-#next-button:hover {
+.next-button:hover {
     cursor: pointer;
 }
+
 
 #algorithm-title {
     color: #bed733; 
@@ -168,6 +169,19 @@ body {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+  }
+
+
+  #size-input {
+
+    width: 50px;
+    background: none;
+    outline: none;
+    border: 0;
+
+    color: white;
+    font-family: 'DidactGothic', serif;
+    font-size: 20px;
   }
 
 
@@ -409,6 +423,39 @@ body {
 }
 
 .sequencer-button:hover {
+    cursor: pointer;
+}
+
+
+#study-completed-text {
+    
+    padding: 50px 100px 0px 100px;
+    
+    color: white;
+    text-align: center;
+
+    
+}
+
+textarea {
+
+    width: 50%;
+    height: 100px;
+
+    padding: 10px;
+
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    resize: none;
+    
+    background-color: #152642;
+    
+    color: white;
+    font-family: 'DidactGothic', serif;
+}
+
+#feedback-button:hover {
     cursor: pointer;
 }
 

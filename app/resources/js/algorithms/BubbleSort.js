@@ -56,6 +56,8 @@ class BubbleSort {
 
     animateStep(step){
 
+        this.swapped = false;
+
         if(!this.stepMatrix[step].length){
             CodeView.highlightStep(0);
             ArrayView.removeFocus();
@@ -82,6 +84,8 @@ class BubbleSort {
 
             a.parentNode.insertBefore(b,a);
 
+            this.swapped = true;
+
             CodeView.highlightStep(3);
         }
 
@@ -97,6 +101,10 @@ class BubbleSort {
         }
 
         return true;
+    }
+
+    nearlySort(array){
+
     }
 }
 

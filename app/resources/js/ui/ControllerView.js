@@ -15,23 +15,21 @@ class ControllerView {
 
     }
 
-    enableResetButton(){
 
-        var resetButton = this.getCurrentContainer().querySelector("#reset-button");
+    enableButton(selector){
+        var button = this.getCurrentContainer().querySelector(selector);
 
-        resetButton.style.opacity = "100%";
-        resetButton.style.pointerEvents = "initial";
-        resetButton.disabled = false;
+        button.style.opacity = "100%";
+        button.style.pointerEvents = "initial";
+        button.disabled = false;
     }
 
-    disableResetButton(){
+    disableButton(selector){
+        var button = this.getCurrentContainer().querySelector(selector);
 
-        var resetButton = this.getCurrentContainer().querySelector("#reset-button");
-
-        resetButton.style.opacity = "50%";
-        resetButton.style.pointerEvents = "none";
-        resetButton.disabled = true;
-
+        button.style.opacity = "50%";
+        button.style.pointerEvents = "none";
+        button.disabled = true;
     }
 
     changeToStartButton(){

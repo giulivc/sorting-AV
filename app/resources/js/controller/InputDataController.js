@@ -4,7 +4,7 @@ import ArrayView from "../ui/ArrayView.js";
 
 var randomGenDiv, customGenDiv,
     dataToggle, generateRandomButton, generateCustomButton,
-    sizeSlider, sizeText, modePicker,
+    sizeInput, sizeSlider, modePicker,
     customArrayInputBox, errorMsgField;
 
 class InputDataController {
@@ -25,10 +25,14 @@ class InputDataController {
         generateCustomButton = document.getElementById("generate-custom");
         generateCustomButton.addEventListener("click", (event) => this.onGenerateCustom());
 
-        sizeSlider = document.getElementById("size-setting");
-        sizeSlider.addEventListener("input", (event) => this.onSizeInput());
 
-        sizeText = document.getElementById("size-text");
+        sizeSlider = document.getElementById("size-setting");
+        sizeInput = document.getElementById("size-input");
+
+        sizeSlider.addEventListener("input", (event) => this.onSizeInput());
+        sizeInput.addEventListener ("change", function () {
+            sizeSlider.value = this.value;
+         });
 
         customArrayInputBox = document.getElementById("custom-input");
 
@@ -79,7 +83,8 @@ class InputDataController {
                 break;
 
             case Config.SETTING_NEARLY_SORTED: 
-                array.sort(); // TO DO
+                this.nearlySort(array);
+                console.log(array);
                 break;
 
             case Config.SETTING_SORTED: 
@@ -92,11 +97,75 @@ class InputDataController {
         ArrayView.renderArray(array);
 
         this.animationController.setUnsortedArray(array);
-        this.animationController.setSpeed(-11.6 * (size-15) + 1000);
+        this.animationController.setSpeed(this.getSpeed(size));
         
 
 
     }
+    
+    nearlySort(array){
+        this.quickSortNearly(array, 0, array.length - 1);
+    }
+
+    
+    quickSortNearly(arr, start, end) {
+        // Base case or terminating case
+
+        if (Math.abs(start - end) <= 3) {
+            return;
+        }
+        
+        // Returns pivotIndex
+        let index = this.partition(arr, start, end);
+        
+        // Recursively apply the same logic to the left and right subarrays
+        this.quickSortNearly(arr, start, index - 1);
+        this.quickSortNearly(arr, index + 1, end);
+    }
+
+    partition(arr, start, end){
+        // Taking the last element as the pivot
+        const pivotValue = arr[end];
+        let pivotIndex = start; 
+        for (let i = start; i < end; i++) {
+            if (arr[i] < pivotValue) {
+            // Swapping elements
+            [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
+            // Moving to next element
+            pivotIndex++;
+            }
+        }
+        
+        // Putting the pivot value in the middle
+        [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]] 
+        return pivotIndex;
+    }
+
+
+
+
+    getSpeed(arraySize){
+
+        if(arraySize <= 15){
+            return 1000;
+        }
+
+        if(arraySize <= 30){
+            return 750;
+        }
+
+        if(arraySize <= 50){
+            return 200;
+        }
+
+        if(arraySize <= 70){
+            return 50;
+        }
+
+        return 10;
+    }
+
+
 
     onGenerateCustom(){
 
@@ -155,18 +224,18 @@ class InputDataController {
     isValid(input){
 
         
-        if(input.match("^[0-9]+(,[0-9]+)*$")){
+        if(input.match("^\\s*[0-9]+(,\\s*[0-9]*\\s*)*$")){
             return true;
         } else {
             errorMsgField.style.visibility = "visible";
-            errorMsgField.innerHTML = "Your entry doesn't match the required format.";
+            errorMsgField.innerHTML = "Your entry doesn't match the required format. (x, y, z, ...)";
             return false;
         }
         
     }
 
     onSizeInput(){
-        sizeText.innerHTML = "Array Size: " + sizeSlider.value;
+        sizeInput.value = sizeSlider.value;
     }
 
     onModeSelected(target){

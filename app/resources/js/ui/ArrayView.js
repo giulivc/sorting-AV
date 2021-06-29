@@ -1,3 +1,5 @@
+import Config from "../utils/Config.js";
+
 var arrayContainer;
 
 class ArrayView {
@@ -70,7 +72,7 @@ class ArrayView {
         }
 
 
-        li.style.backgroundColor = "#BED733";
+        li.style.backgroundColor = Config.MAIN_GREEN;
     }
 
     setFocusOnListItems(indices){
@@ -80,8 +82,8 @@ class ArrayView {
 
         this.removeFocus();
 
-        li1.style.backgroundColor = "#FF9900";
-        li2.style.backgroundColor = "#FF9900";
+        li1.style.backgroundColor = Config.MAIN_ORANGE;
+        li2.style.backgroundColor = Config.MAIN_ORANGE;
 
     }
 
@@ -91,7 +93,7 @@ class ArrayView {
         
         this.removeFocus();
 
-        li.style.backgroundColor = "#FF9900";
+        li.style.backgroundColor = Config.MAIN_ORANGE;
         
     }
 
@@ -107,28 +109,25 @@ class ArrayView {
         }
     }
 
-    markAsPivot(id){
-
-        let li = this.getListItemById(id);
-        this.removeFocus();
+    clear(){
 
         var listItems = arrayContainer.getElementsByTagName("li");
 
         for(let i = 0; i < listItems.length; i++){
-
-            if(listItems[i].style.backgroundColor == "rgb(153, 128, 255)"){
-                listItems[i].style.backgroundColor = "white";
-            }
+            listItems[i].style.backgroundColor = "white";
         }
+    }
 
-        
+    markAsPivot(id){
 
-        li.style.backgroundColor = "#9980FF";
+        let li = this.getListItemById(id);
+
+        li.style.backgroundColor = Config.MAIN_PURPLE;
 
     }
 
     markAsPreviousPivot(id){
-        this.getListItemById(id).style.backgroundColor = "#D6CCFF"; // TO DO: FARBE
+        this.getListItemById(id).style.backgroundColor = Config.LIGHT_PURPLE; // TO DO: FARBE
     }
 
 

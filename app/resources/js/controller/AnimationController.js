@@ -11,8 +11,8 @@ import InputDataController from "./InputDataController.js";
 import SpeedController from "./SpeedController.js";
 
 var algorithm, speedController, dataController,
-    visualizationStarted, backwardMode, forwardMode,
-    completedSteps, stepCountWithSpeed,
+    visualizationStarted, backwardMode, forwardMode, paused,
+    stepCountWithSpeed,
     timeouts, startTimeInMs, prevSpeed;
 
 class AnimationController {
@@ -20,8 +20,6 @@ class AnimationController {
     constructor(condition){
 
         this.mode = condition.mode;
-
-        self = this;
 
         // generate initial array
         var array = [];
@@ -44,15 +42,17 @@ class AnimationController {
                 break;
         }
 
-        if(condition.mode == Config.MODE_SPEED){
+        if(this.mode == Config.MODE_SPEED){
             speedController = new SpeedController(this);
-        } else if(condition.mode == Config.MODE_DATA){
+        } else if(this.mode == Config.MODE_DATA){
             dataController = new InputDataController(this);
+        } else if(this.mode == Config.MODE_STEPTHROUGH){
+            ControllerView.disableButton("#backward-button");
         }
 
         this.speed = Config.DEFAULT_SPEED_IN_MS;
 
-        completedSteps = [];
+        this.currentStep = 0;
 
         this.sortedArray = algorithm.sort();
 
@@ -62,9 +62,12 @@ class AnimationController {
         visualizationStarted = false;
         backwardMode = false;
         forwardMode = false;
+        paused = false;
+
         timeouts = [];
         
-        ControllerView.disableResetButton();
+        ControllerView.disableButton("#reset-button");
+        ArrayView.clearArray();
         ArrayView.renderArray(this.unsortedArray);
         
  
@@ -83,39 +86,54 @@ class AnimationController {
 
     play(){
 
-        backwardMode = false;
-        forwardMode = false;
-
         this.speed = this.getAnimationSpeed();
 
         if(!visualizationStarted){
 
             //startVisualization
 
-            this.reset();
+            visualizationStarted = true; 
 
-            ControllerView.enableResetButton();
+            /*if(!forwardMode && !backwardMode){
+                this.reset();
+            }*/
 
-            visualizationStarted = true;
-
-            completedSteps = [];
+            ControllerView.enableButton("#reset-button");
+            if(this.mode == Config.MODE_STEPTHROUGH){
+                ControllerView.enableButton("#backward-button");
+                ControllerView.enableButton("#skip-to-end-button");
+                ControllerView.enableButton("#forward-button");
+            } 
 
             this.sortedArray = algorithm.sort();
 
             ControllerView.changeToPauseButton();
-            this.animateStepMatrix(this.speed, 0);
+
+            if(forwardMode || backwardMode){
+                forwardMode = false;
+                backwardMode = false;
+                this.animateStepMatrix(this.speed, this.currentStep + 1);
+            } else {
+                this.animateStepMatrix(this.speed, 0);
+            }
+            
             
         } else {
 
             //resume visualization
 
+            paused = false;
+
+            forwardMode = false;
+            backwardMode = false;
+
             ControllerView.changeToPauseButton();
-            
+
             var self = this;
-            
+                        
             setTimeout(function(){
 
-                self.animateStepMatrix(this.speed, self.currentStep + 1);
+                self.animateStepMatrix(self.speed, self.currentStep + 1);
 
             }, this.resumeTimeInMs);            
            
@@ -146,19 +164,17 @@ class AnimationController {
         prevSpeed = speed;
         stepCountWithSpeed = 0;
 
-        var index = 0;
+        var index = 0,
+        self = this;
             
         for(let i = step; i < algorithm.stepMatrix.length; i++){
 
             timeouts.push(setTimeout(function animation(){
 
                 visualizationStarted = algorithm.animateStep(i);
-
-                completedSteps.push(i);
-                
+                self.currentStep = i;
                 stepCountWithSpeed++;
                 
-
             }, index * speed));
 
             index++;
@@ -166,17 +182,21 @@ class AnimationController {
         }
     }
 
-    getCurrentStep(){
-        return completedSteps[completedSteps.length - 1];
-    }
-
 
 
     reset(){
 
-        ControllerView.disableResetButton();
+        ControllerView.disableButton("#reset-button");
+            if(this.mode == Config.MODE_STEPTHROUGH){
+                ControllerView.disableButton("#backward-button");
+                ControllerView.enableButton("#skip-to-end-button");
+                ControllerView.enableButton("#forward-button");
+            } 
 
         visualizationStarted = false;
+        forwardMode = false;
+        backwardMode = false;
+        paused = false;
 
         for(let i = 0; i < timeouts.length; i++){
             clearTimeout(timeouts[i]);
@@ -195,8 +215,6 @@ class AnimationController {
             document.getElementById("speed-slider").value = Config.DEFAULT_SPEED_IN_MS;
             this.speed = Config.DEFAULT_SPEED_IN_MS;
         }
-
-        
 
         this.currentStep = 0;
 
@@ -220,33 +238,40 @@ class AnimationController {
         CodeView.removeHighlighting();
 
         ControllerView.changeToStartButton();
-        ControllerView.enableResetButton();
+        ControllerView.enableButton("#reset-button");
+        ControllerView.enableButton("#backward-button");
+        ControllerView.disableButton("#skip-to-end-button");
+        ControllerView.disableButton("#forward-button");
+
+
+        this.currentStep = algorithm.stepMatrix.length - 1;
+
+        visualizationStarted = false;
+        forwardMode = false;
+        paused = false;
 
     }
 
     onSpeedChanged(speed){
 
-        if(visualizationStarted){
+        if(visualizationStarted && !paused){
             this.changeSpeed(speed);
         }
 
     }
 
-
     changeSpeed(speed){
 
-        var currentStep = this.getCurrentStep(),
-            timeLeftInMs =  (prevSpeed * stepCountWithSpeed) - (Date.now() - startTimeInMs),
-            context = this;
-
+        var timeLeftInMs =  (prevSpeed * stepCountWithSpeed) - (Date.now() - startTimeInMs),
+            self = this;
 
         for(let i = 0; i < timeouts.length; i++){
             clearTimeout(timeouts[i]);
         }
     
-        setTimeout(function(){
+        setTimeout(function startWithNewSpeed(){
             
-            context.animateStepMatrix(speed, currentStep + 1);
+            self.animateStepMatrix(speed, self.currentStep + 1);
 
         }, timeLeftInMs);  
     }
@@ -254,7 +279,8 @@ class AnimationController {
 
     pause(){
 
-        this.currentStep = this.getCurrentStep();
+        paused = true;
+
         this.resumeTimeInMs = (prevSpeed * stepCountWithSpeed) - (Date.now() - startTimeInMs);
 
         for(let i = 0; i < timeouts.length; i++){
@@ -262,7 +288,6 @@ class AnimationController {
         }
 
         ControllerView.changeToStartButton();
-
         
     }
 
@@ -270,75 +295,122 @@ class AnimationController {
 
     stepBackward(){
 
-        this.currentStep = this.getCurrentStep();
-
         forwardMode = false;
+
+        ControllerView.enableButton("#forward-button");
+        ControllerView.enableButton("#skip-to-end-button");
 
         if(!backwardMode){
             backwardMode = true;
 
-            for(let i = 0; i < timeouts.length; i++){
-                clearTimeout(timeouts[i]);
+            if(!paused){
+
+                for(let i = 0; i < timeouts.length; i++){
+                    clearTimeout(timeouts[i]);
+                }
+        
+                ControllerView.changeToStartButton();
+            } 
+
+            if(algorithm.swapped){
+                algorithm.animateStep(this.currentStep);
+            } else {
+                algorithm.animateStep(this.currentStep - 1);
+                this.currentStep--;
             }
+            
 
-            ControllerView.changeToStartButton();
-
-            algorithm.animateStep(this.currentStep);
-
-
+            
         
         } else {
 
             if(this.currentStep){
                 algorithm.animateStep(this.currentStep - 1);
 
-                completedSteps.pop();
+                this.currentStep--;
 
             } else {
 
-                // TO DO: reset und opacity 50%
+                ControllerView.disableButton("#reset-button");
+                ControllerView.disableButton("#backward-button");
+                CodeView.removeHighlighting();
                 return;
             }
            
         }
 
+        
+
     }
 
 
     stepForward(){
-            
-        this.currentStep = this.getCurrentStep();
+        
 
-        backwardMode = false;
-
-
-        if(!forwardMode){
+        if(!forwardMode && !backwardMode){
             forwardMode = true;
 
-            for(let i = 0; i < timeouts.length; i++){
-                clearTimeout(timeouts[i]);
-            }
+            if(visualizationStarted){
 
-            ControllerView.changeToStartButton();
+                for(let i = 0; i < timeouts.length; i++){
+                    clearTimeout(timeouts[i]);
+                }
+        
+                ControllerView.changeToStartButton();
+
+                if(algorithm.swapped){
+                    algorithm.animateStep(this.currentStep + 1);
+                    this.currentStep++;
+                } else {
+                    algorithm.animateStep(this.currentStep);
+                }
+                
+    
+            } else {
+                algorithm.animateStep(this.currentStep);
+                
+            }
+            
+            ControllerView.enableButton("#reset-button");
+            ControllerView.enableButton("#backward-button");
+            
 
         
         } else {
-
-            if(this.currentStep != algorithm.stepMatrix.length - 1){
-
-                algorithm.animateStep(this.currentStep + 1);
-                completedSteps.push(this.currentStep + 1);
-
-                
+            
+            if(backwardMode){
+                if(algorithm.swapped){
+                    algorithm.animateStep(this.currentStep);
+                } else {
+                    algorithm.animateStep(this.currentStep + 1);
+                    this.currentStep++;
+                }
             } else {
 
-                //TO DO
+                if(this.currentStep != algorithm.stepMatrix.length - 1){
 
-                return;
-            }
+                    algorithm.animateStep(this.currentStep + 1);
+                        this.currentStep++;
+    
+                    
+                } else {
+    
+                    ControllerView.disableButton("#skip-to-end-button");
+                    ControllerView.disableButton("#forward-button");
+    
+                    return;
+                }
+
+            }  
          
         }
 
+        backwardMode = false;
+
+    }
+
+    nearlySort(array){
+        return algorithm.nearlySort();
     }
 
 

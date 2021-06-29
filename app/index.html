@@ -6,45 +6,67 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sorting Algorithm Visualizer</title>
-    <link rel="stylesheet" href="/app/resources/css/style.css">
+    <link rel="stylesheet" href="./resources/css/style.css">
+    <link href="https://unpkg.com/survey-knockout@1.8.52/modern.css" type="text/css" rel="stylesheet" />    
+    <link rel="shortcut icon" href="#">
 
 </head>
 
 <body>
 
-    <!-- #### 1 #### -->
+    <!-- #### introduction #### -->
 
-    <div id="first-page">
+    <div class="information-text" id="introduction-text">
 
-        <div id="introduction-text">
-            <p style="font-size: x-large; color: #9980FF;">Liebe(r) StudienteilnehmerIn,</p><br>
+
+        <p style="font-size: x-large; color: #9980FF;">Liebe(r) StudienteilnehmerIn,</p><br>
     
-            <p>Im Rahmen meiner Bachelorarbeit möchte ich den Lerneffekt verschiedener Interaktionsformen von Algorithmenvisualisierung untersuchen.</p>
-            
-            <p>Zunächst würde ich gerne demographische Daten von dir sammeln und anschließend sollst du einen kurzen Fragebogen zur Selbsteinschätzung ausfüllen. 
-                Danach startet die Hauptstudie: Du setzt dich nach einem kurzen Tutorial mit zwei verschiedenen Visualisierungssystemen auseinander und beantwortest 
-                anschließend jeweils ein paar Fragen über den dargestellten Sortieralgorithmus.</p>
+        <p>Im Rahmen meiner Bachelorarbeit möchte ich den Lerneffekt verschiedener Interaktionsformen von Algorithmenvisualisierung untersuchen.</p>
+        
+        <p>Zunächst würde ich gerne demographische Daten von dir sammeln und anschließend sollst du einen kurzen Fragebogen zur Selbsteinschätzung ausfüllen. 
+            Danach startet die Hauptstudie: Du setzt dich nach einem kurzen Tutorial mit zwei verschiedenen Visualisierungssystemen auseinander und beantwortest 
+            anschließend jeweils ein paar Fragen über den dargestellten Sortieralgorithmus.</p>
+
+        <p>Die Studie dauert ca. <span style="color: #9980FF;">60 Minuten</span>. </p>
+        <p>Falls du Student an der Universität Regensburg sind, kannst du am Ende der Studie deine Matrikelnummer eintragen und erhältst <span style="color: #9980FF;">1 VP</span>.<br>
+            Die erhobenen Daten werden im Rahmen meiner Bachelorarbeit ausgewertet. Die Daten sind anonymisiert und können nicht zurückverfolgt werden.</p>
+       
+        <p>Bei Fragen wende dich gerne an: Giulia.von-Canal@stud.uni-regensburg.de</p>
+
+        <p>Um zu starten, klicke auf <span style="color: #FF9900;">Weiter</span>...</p>
+
     
-            <p>Die Studie dauert ca. <span style="color: #9980FF;">60 Minuten</span>. </p>
-            <p>Falls du Student an der Universität Regensburg sind, kannst du am Ende der Studie deine Matrikelnummer eintragen und erhältst <span style="color: #9980FF;">1 VP</span>.<br>
-                Die erhobenen Daten werden im Rahmen meiner Bachelorarbeit ausgewertet. Die Daten sind anonymisiert und können nicht zurückverfolgt werden.</p>
-           
-            <p>Bei Fragen wende dich gerne an: Giulia.von-Canal@stud.uni-regensburg.de</p>
-    
-            <p>Um zu starten, klicke auf <span style="color: #FF9900;">Weiter</span>...</p>
-        </div>
-    
-        <button id="first-condition-button">Weiter</button>
+        <button class="next-button" id="second-page-button">Weiter</button>
 
     </div>
 
-    <!-- #### 2 #### -->
+    <!-- #### survey container #### -->
+    <div id="survey" style="display: none;">
 
-    <!-- #### 3 #### -->
+    </div>
 
-    <!-- #### 4 #### -->
+
+    <!-- ### task description ### -->
+
+    <div class="information-text" id="task-description" style="display: none;">
+        <br><br>
+        <p>Bei Klicken auf <span style="color: #FF9900;">Starten</span> siehst du eine interaktive Visualisierungsumgebung des <span id="algorithm" style="color: #BED730;">BubbleSort</span> - Algorithmus.</p><br>
+            
+        <p>Du kannst dich <span style="color: #9980FF;">so lange du möchtest</span> mit dem Tool beschäftigen. Der Fokus sollte dabei darauf liegen, die <span style="color: #9980FF;">Funktionsweise des Algorithmus</span> zu verstehen. Anschließend beantwortest du in einem kurzen <span style="color: #9980FF;">Quiz</span> ein paar Fragen über den dargestellten Sortieralgorithmus.</p><br>
+        <p>Wenn du dir sicher bist, dass du dich genug mit dem Algorithmus auseinandergesetzt hast, dann bestätige nach Klicken auf <span style="color: #FF9900;">Fertig</span>, dass du bereit für das Quiz bist.</p><br>
+    
+        <p>Ganz wichtig: <u>Nicht du</u> wirst getestet, sondern das <u>System</u>. Du kannst also nichts falsch machen!</span></p>
+        
+        <button class="next-button" id="start-visualization-button">Starten</button>
+        
+
+    </div>
+
+    <!-- #### visuliazion container #### -->
 
     <div id="visualization" style="display: none;">
+
+        <button class="next-button" id="start-quiz-button">Fertig</button>
 
         <div class="grid" >
 
@@ -63,8 +85,8 @@
                     </label>
                     Custom Array<br><br>
                     <div id="random-generator">
-                        <p id="size-text">Array Size: 15</p>
-                        <input type="range" min="4" max="100" value="15" class="size-slider" id="size-setting"><br><br><br>
+                        Array Size: <input id="size-input" value="15"></input><br><br>
+                        <input type="range" min="4" max="100" value="15" class="size-slider" id="size-setting"><br><br>
                         <div id="mode-picker" style="text-align: center;">
                             <button class="mode-button selected" id=0 >Random</button><br>
                             <button class="mode-button" id=1 >Nearly Sorted</button><br>
@@ -167,10 +189,27 @@
     
     </div>
 
-   
+    <!-- #### last page #### -->
 
+    <div id="last-page" style="display: none;">
 
-    <script type="module" src="/app/resources/js/index.js"></script>
+        <div id="study-completed-text" >
+            <p style="font-size: x-large">Vielen Dank für deine Teilnahme!</p><br>
+            
+            <p>Wenn du für deine Teilnahme <span style="color: #9980FF">1 VP-Stunde</span> erhalten möchtest, öffne den nachfolgenden Link in einem neuen Tab:</p>
+
+            <p><a href="https://forms.gle/bu3kd4zCSNVM8u1TA">https://forms.gle/bu3kd4zCSNVM8u1TA</a></p><br>
+    
+            <p>Hier ist noch Platz für <span style="color: #FF9900">Feedback</span> oder andere Bemerkungen:</p><br>
+            <textarea id="feedback"></textarea>
+            <p id="feedback-button" style="color: #FF9900;">Senden</p>
+        </div>
+
+    </div>
+
+    <script type="module" src="./resources/js/index.js"></script>
+    <script src="https://unpkg.com/knockout@3.5.1/build/output/knockout-latest.js"></script>
+    <script src="https://unpkg.com/survey-knockout"></script>
 
 </body>
 

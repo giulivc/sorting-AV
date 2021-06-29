@@ -1,146 +1,209 @@
 import Config from "./utils/Config.js";
 import AnimationController from "./controller/AnimationController.js";
+import Questionnaire from "./experiment/Questionnaire.js";
+import VisualizationView from "./ui/VisualizationView.js";
+import Quiz from "./experiment/Quiz.js";
 
-var firstCondition, secondCondition;
+var currentCondition, firstCondition, secondCondition,
+    visualizationView, quiz,
+    animationController,
+    feedbackArea, feedbackButton;
 
 function init(){
 
-    //nach selbsteinschätzung EXPERIMENT STARTEN button onClick:
-    getExperimentConditions();
+    currentCondition = 1;
+    
+    let secondPageBtn = document.getElementById("second-page-button"),
+        startQuizBtn = document.getElementById("start-quiz-button"),
+        startVisualizationBtn = document.getElementById("start-visualization-button");
 
-    var firstConditionBtn = document.getElementById("first-condition-button");
-        //secondConditionBtn = document.getElementById("second-condition-button");
+    feedbackArea = document.getElementById("feedback");
+    feedbackButton = document.getElementById("feedback-button");
 
-        firstConditionBtn.addEventListener("click", (event) => initCondition(firstCondition));
-        //secondConditionBtn.addEventListener("click", (event) => initCondition(secondCondition));
+    secondPageBtn.addEventListener("click", (event) => startQuestionnaire());
+    startQuizBtn.addEventListener("click", (event) => startQuiz());
+    startVisualizationBtn.addEventListener("click", (event) => initCondition());
 
 }
 
 function getExperimentConditions(){
 
-    /*var experiment = ExperimentManager.pickRandomExperiment(),
-        firstCondition = experiment.conditions[0],
-        secondCondition = experiment.conditions[1];
-    */
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() { 
+
+        if (request.readyState == 4 && request.status == 200){
+            /*var conditions = JSON.parse(request.responseText).conditions; 
+        
+            firstCondition = conditions[0];
+            secondCondition = conditions[1];*/
+        } 
+            
+    }
+    request.open("GET", "https://algorithms.software-engineering.education/api/experiments/random" , true); 
+    request.send(null);
 
     //example
+    var conditions = {
+        "id":"1234567890",
+        "state":"open",
+        "startedAt": null,
+        "conditions":[
+           {
+              "mode":"base",
+              "algorithm":"bubble-sort"
+           },
+           {
+              "mode":"step-through",
+              "algorithm":"insertion-sort"
+           }
+        ],
+        "currentParticipant": null,
+        "results":{
+           "data": null
+        }
+     }.conditions;
+    
+    firstCondition = conditions[0];
+    secondCondition = conditions[1];
 
-   firstCondition = {"mode": "base", "algorithm": "insertion-sort"};
-   secondCondition = {"mode": "step-through", "algorithm": "bubble-sort"};
+
+}
+
+function stringifyAlgorithm(algorithm){
+    switch(algorithm){
+        case Config.BUBBLESORT: 
+            return "BubbleSort";
+        case Config.INSERTIONSORT: 
+            return "InsertionSort";
+        case Config.SELECTIONSORT: 
+            return "SelectionSort";
+        default: 
+            return;
+    }
+}
+
+function startQuestionnaire(){
+    document.getElementById("introduction-text").style.display = "none";
+    document.getElementById("survey").style.display = "block";
+
+    var questionnaire = new Questionnaire();
+    questionnaire.addOnCompleteListener(processQuestionnaireData);
+}
+
+
+function processQuestionnaireData(sender) {
+    var resultAsString = JSON.stringify(sender.data);
+
+    console.log(resultAsString); //new ExperimentResult Object 
+
+    getExperimentConditions();
+
+    document.getElementById("survey").innerHTML = "";
+    document.getElementById("task-description").style.display = "block";
+    document.querySelector("#task-description #algorithm").innerHTML = stringifyAlgorithm(firstCondition.algorithm);
+
+}
+
+function startQuiz(){
+
+    animationController.reset();
+
+    document.getElementById("visualization").style.display = "none";
+    document.getElementById("survey").style.display = "block";
+
+    quiz = new Quiz(visualizationView.getAlgorithm());
+    quiz.addOnCompleteListener(processQuizData);
+}
+
+function processQuizData(sender) {
+    var resultAsString = JSON.stringify(sender.data);
+
+    console.log(resultAsString); //new ExperimentResult Object 
+
+    document.getElementById("survey").innerHTML = "";
+
+    if(currentCondition == 1){
+        document.getElementById("task-description").style.display = "block";
+        document.querySelector("#task-description #algorithm").innerHTML = stringifyAlgorithm(secondCondition.algorithm);
+    } else {
+        document.getElementById("last-page").style.display = "block";
+        feedbackButton.addEventListener("click", (event) => saveFeedback());
+    }
+
+    currentCondition++;
 
 }
 
 
+function initCondition(){
 
-function initCondition(condition){
+    if(currentCondition == 1){
+        var condition = firstCondition;
+    } else {
+        var condition = secondCondition;
+    }
 
-    document.getElementById("first-page").style.display = "none";
+    document.getElementById("task-description").style.display = "none";
     document.getElementById("visualization").style.display = "block";
 
-    setAlgorithmTitle(condition);
-    setPseudoCode(condition);
+    visualizationView = new VisualizationView(condition);
 
-    displayModeParameter(condition.mode);
+    visualizationView.setAlgorithmTitle(stringifyAlgorithm(condition.algorithm));
+    visualizationView.setPseudoCode();
+    visualizationView.displayModeParameter();
+
     initListener(condition);
 
 }
 
-function displayModeParameter(mode){
-    switch(mode){
-        case Config.MODE_SPEED:
-            displaySpeedController();
-            break;
-        case Config.MODE_DATA:
-            displayDataController();
-            break;
-        case Config.MODE_STEPTHROUGH:
-            displayStepController();
-            break;
-        default:
-            break;
-    }
-}
-
-
-function setAlgorithmTitle(condition){
-    
-    var title;
-
-    switch(condition.algorithm){
-        case Config.BUBBLESORT: 
-            title = "BubbleSort";
-            break;
-        case Config.INSERTIONSORT: 
-            title = "InsertionSort";
-            break;
-        case Config.SELECTIONSORT: 
-            title = "SelectionSort";
-            break;
-    }
-
-    document.getElementById("algorithm-title").innerHTML = title;
-
-}
-
-function setPseudoCode(condition){  
-
-    document.querySelectorAll(".pseudocode").forEach(function(ul){
-       
-        if(ul.id == condition.algorithm){
-            ul.style.display = "block";
-        } else {
-            ul.style.display = "none";
-        }
-    });  
-
-}
-
-
-function displaySpeedController(){
-    document.getElementById("speed-controller").style.display = "block";
-}
-
-function displayDataController(){
-    document.getElementById("data-controller").style.display = "block";
-}
-
-function displayStepController(){
-    document.getElementById("step-controller").style.display = "block";
-    document.getElementById("base-controller").style.display = "none";
-}
 
 function initListener(condition){
 
-    var animationController = new AnimationController(condition),
-        container;
+    animationController = new AnimationController(condition);
 
-    if(condition.mode == Config.MODE_STEPTHROUGH){
-        container = document.getElementById("step-controller");
-    } else {
-        container = document.getElementById("base-controller");
+    if(condition.mode == Config.MODE_BASELINE){
+
+        let startButton = document.querySelector("#base-controller #start-button"),
+            pauseButton = document.querySelector("#base-controller #pause-button"),
+            resetButton = document.querySelector("#base-controller #reset-button");
+
+        startButton.addEventListener("click", (event) => animationController.play());
+        pauseButton.addEventListener("click", (event) => animationController.pause());
+        resetButton.addEventListener("click", (event) => animationController.reset());
+
     }
 
-    var startButton = container.querySelector("#start-button"),
-        pauseButton = container.querySelector("#pause-button"),
-        resetButton = container.querySelector("#reset-button");
-        
+    if(condition.mode === Config.MODE_STEPTHROUGH){
 
-    startButton.addEventListener("click", (event) => animationController.play());
-    pauseButton.addEventListener("click", (event) => animationController.pause());
-    resetButton.addEventListener("click", (event) => animationController.reset());
-
-    if(condition.mode == Config.MODE_STEPTHROUGH){
-
-        var skipToEndBtn = document.getElementById("skip-to-end-button"),
+        let startButton = document.querySelector("#step-controller #start-button"),
+            pauseButton = document.querySelector("#step-controller #pause-button"),
+            resetButton = document.querySelector("#step-controller #reset-button"),
+            skipToEndBtn = document.getElementById("skip-to-end-button"),
             backwardBtn = document.getElementById("backward-button"),
             forwardBtn = document.getElementById("forward-button");
 
+
+        startButton.addEventListener("click", (event) => animationController.play());
+        pauseButton.addEventListener("click", (event) => animationController.pause());
+        resetButton.addEventListener("click", (event) => animationController.reset());
         skipToEndBtn.addEventListener("click", (event) => animationController.skipToEnd());
         backwardBtn.addEventListener("click", (event) => animationController.stepBackward());
         forwardBtn.addEventListener("click", (event) => animationController.stepForward());
     }
     
     
+}
+
+function saveFeedback(){
+    var feedback = feedbackArea.value;
+
+    feedbackArea.readOnly = "true";
+
+    feedbackButton.innerHTML = "Gesendet";
+    feedbackButton.style.color = Config.MAIN_GREEN;
+    feedbackButton.style.pointerEvents = "none";
+
+    console.log(feedback); // TO DO
 }
 
 

@@ -33,7 +33,7 @@ class SelectionSort {
 
 
                 //stores the two indices that should be focused (highlighted)
-                this.stepMatrix.push([minimum, j]);
+                this.stepMatrix.push([i, minimum, j]);
 
                 if(array[minimum] > array[j]){
 
@@ -41,6 +41,7 @@ class SelectionSort {
 
                     //stores if the two indices should be swapped 
                     this.stepMatrix.push([i, j, true]);
+                    
                     minimum = j;
                 }
                 
@@ -69,14 +70,23 @@ class SelectionSort {
 
     animateStep(step){
 
+        this.swapped = false;
+
         if(!this.stepMatrix[step].length){
             CodeView.highlightStep(0);
-            ArrayView.removeFocus();
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step+1][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
         }
 
         if(this.stepMatrix[step].length == 1 && this.stepMatrix[step][0].length != 0){
-            ArrayView.markAsPivot(this.stepMatrix[step][0]);
             CodeView.highlightStep(1);
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+            ArrayView.markAsPivot(this.stepMatrix[step][0]);
         }
 
         if(this.stepMatrix[step].length == 1 && this.stepMatrix[step][0].length == 0){
@@ -85,26 +95,59 @@ class SelectionSort {
         }
 
 
-        if(this.stepMatrix[step].length == 2){
-            
-            ArrayView.setFocusOnListItem(this.stepMatrix[step][1]);
+        if(this.stepMatrix[step].length == 3 && !this.stepMatrix[step].some((el) => typeof el == "boolean")){
+
             CodeView.highlightStep(3);
+
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+
+            if(this.stepMatrix[step][0] != this.stepMatrix[step][1]){
+                ArrayView.markAsPreviousPivot(this.stepMatrix[step][0]);
+            }
+            
+            ArrayView.markAsPivot(this.stepMatrix[step][1]);
+            ArrayView.setFocusOnListItem(this.stepMatrix[step][2]);
+            
         }
 
         if(typeof this.stepMatrix[step][2] == "boolean"){
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
             ArrayView.markAsPreviousPivot(this.stepMatrix[step][0]);
             ArrayView.markAsPivot(this.stepMatrix[step][1]);
+
             CodeView.highlightStep(4);
         }
 
-        if(typeof this.stepMatrix[step][0] == "boolean"){
+        if(this.stepMatrix[step][0] === true){
+
+            ArrayView.clear();
+            for(let i = 0; i < this.stepMatrix[step][1]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+
+            ArrayView.markAsPivot(this.stepMatrix[step][1]); 
+            ArrayView.markAsPivot(this.stepMatrix[step][2]);
+            
             ArrayView.swap(this.stepMatrix[step][1], this.stepMatrix[step][2]);
+
+            this.swapped = true;
+
             CodeView.highlightStep(6);
         }
 
+
         if(typeof this.stepMatrix[step][1] == "boolean"){
-            ArrayView.removeFocus();
-            ArrayView.markListItemAsSorted(this.stepMatrix[step][0]);
+            ArrayView.clear();
+            for(let i = 0; i <= this.stepMatrix[step][0]; i++){
+                ArrayView.markListItemAsSorted(i);
+            }
+            
         } 
 
         if(this.stepMatrix[step].length > 3){
