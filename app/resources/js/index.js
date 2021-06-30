@@ -22,7 +22,7 @@ function init(){
 
 function getExperiment(){
 
-    var request = new XMLHttpRequest();
+    /*var request = new XMLHttpRequest();
     request.onreadystatechange = function() { 
 
         if (request.readyState == 4 && request.status == 200){
@@ -32,9 +32,9 @@ function getExperiment(){
             
     }
     request.open("GET", "https://algorithms.software-engineering.education/api/experiments/random" , true); 
-    request.send();
+    request.send();*/
 
-    /*example
+    // example
     var experiment = `{ 
         "id":"1234567890",
         "state":"open",
@@ -53,9 +53,9 @@ function getExperiment(){
         "results":{
            "data": null
         }
-     }`;*/
+     }`;
     
-    return experiment;
+    return JSON.parse(experiment);
 
 }
 

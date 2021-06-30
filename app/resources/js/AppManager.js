@@ -105,9 +105,9 @@ class AppManager {
     
             self.experiment.results.data = experimentResult;
     
-            //console.log(self.experiment);
+            console.log(self.experiment);
     
-            var request = new XMLHttpRequest();
+            /*var request = new XMLHttpRequest();
             request.onreadystatechange = function() { 
     
                 if (request.readyState == 4 && request.status == 200){
@@ -116,7 +116,7 @@ class AppManager {
                     
             }
             request.open("GET", `https://algorithms.software-engineering.education/api/experiment/:${experiment.id}/close`, true); 
-            request.send(experiment);
+            request.send(experiment);*/
       
         }
     
