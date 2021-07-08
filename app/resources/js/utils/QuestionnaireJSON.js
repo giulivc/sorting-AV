@@ -14,8 +14,27 @@ const QuestionnaireJSON = {
         "title":"Demographisches\n"},
         {"name":"page2","elements":[
             {"type":"matrix","name":"self-assessment","maxWidth":"","title":"Gib an, wie sehr diese Aussagen auf dich zutreffen:","hideNumber":true,"isRequired":true,"isAllRowRequired" : true,"columns":
-                ["Stimmt nicht","Eher nicht","Weder noch","Eher schon ","Stimmt"],"rows":
-                ["Aussage 1","Aussage 2","Aussage 3","Aussage 4", "Aussage 5"]}],
+                [{
+                    value: 1,
+                    text: "Stimmt nicht"
+                }, {
+                    value: 2,
+                    text: "Eher nicht"
+                }, {
+                    value: 3,
+                    text: "Weder noch"
+                }, {
+                    value: 4,
+                    text: "Eher schon"
+                }, {
+                    value: 5,
+                    text: "Stimmt"
+                }],
+                "rows":
+                ["Ich habe mich bereits mit Sortieralgorithmen auseinandergesetzt.",
+                "Ich kann den Ablauf verschiedener Sortieralgorithmen mit Worten beschreiben.",
+                "Wenn mir die Funktionsweise eines Sortieralgorithmus beschrieben wird kann ich diesen beim Namen nennen.",
+                "Ich kann Sortieralgorithmen anhand ihrer Beschreibung namentlich unterscheiden."]}],
         "title":"Selbsteinschätzung"}],
         "showPageTitles":false
 

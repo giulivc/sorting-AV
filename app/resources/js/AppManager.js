@@ -3,13 +3,14 @@ import Questionnaire from "./experiment/Questionnaire.js";
 import VisualizationView from "./ui/VisualizationView.js";
 import Quiz from "./experiment/Quiz.js";
 import AnimationController from "./controller/AnimationController.js";
+import ExperimentResult from "./experiment/ExperimentResult.js";
 
 var firstPage, 
     surveyDiv, visualizationDiv, instructionDiv,
     lastPage;
 
 var firstCondition, secondCondition,
-    experimentResult = {},
+    experimentResult,
     visualizationView, quiz,
     animationController;
 
@@ -33,6 +34,8 @@ class AppManager {
         visualizationDiv = document.getElementById("visualization");
         instructionDiv = document.getElementById("instruction");
         lastPage = document.getElementById("last-page");
+
+        experimentResult = new ExperimentResult();
         
     }
 
@@ -44,13 +47,15 @@ class AppManager {
         var questionnaire = new Questionnaire();
         questionnaire.addOnCompleteListener(this.processQuestionnaireData);
 
+        experimentResult.addTimestamp("questionnaireStarted", new Date().toISOString());
+
     }
 
 
     processQuestionnaireData(sender) {
         var questionnaireData = sender.data;
     
-        Object.assign(experimentResult, questionnaireData);
+        experimentResult.saveQuestionnaireData(questionnaireData);
     
         surveyDiv.innerHTML = "";
         instructionDiv.style.display = "block";
@@ -82,6 +87,13 @@ class AppManager {
     
         quiz = new Quiz(visualizationView.getAlgorithm());
         quiz.addOnCompleteListener(this.processQuizData);
+
+        if(this.currentCondition == 1){
+            experimentResult.addTimestamp("firstQuizStarted", new Date().toISOString());
+        } else {
+            experimentResult.addTimestamp("secondQuizStarted", new Date().toISOString());
+        }
+        
     }
 
     processQuizData(sender) {
@@ -92,48 +104,62 @@ class AppManager {
     
         if(self.currentCondition == 1){
     
-            experimentResult.firstCondition = quizData;
+            experimentResult.saveQuizData(firstCondition.algorithm, quizData);
+            experimentResult.addTimestamp("firstQuizCompleted", new Date().toISOString());
     
             instructionDiv.style.display = "block";
             instructionDiv.querySelector("#algorithm").innerHTML = self.stringifyAlgorithm(secondCondition.algorithm);
 
         } else {
     
-            experimentResult.secondCondition = quizData;
+            experimentResult.saveQuizData(secondCondition.algorithm, quizData);
+            experimentResult.addTimestamp("secondQuizCompleted", new Date().toISOString());
+
     
             lastPage.style.display = "block";
     
-            self.experiment.results.data = experimentResult;
+            self.experiment.results = experimentResult;
     
             console.log(self.experiment);
+
+            //self.closeExperiment();
     
-            /*var request = new XMLHttpRequest();
-            request.onreadystatechange = function() { 
-    
-                if (request.readyState == 4 && request.status == 200){
-                    console.log(request.responseText);
-                } 
-                    
-            }
-            request.open("GET", `https://algorithms.software-engineering.education/api/experiment/:${experiment.id}/close`, true); 
-            request.send(experiment);*/
-      
         }
     
         self.currentCondition++;
     
     }
-    
 
+    onFeedbackSend(){
+
+        let feedbackArea = document.getElementById("feedback"),
+            feedbackButton = document.getElementById("feedback-button"),
+            feedback = feedbackArea.value;
+
+        feedbackArea.readOnly = "true";
+        feedbackButton.innerHTML = "Gesendet";
+        feedbackButton.style.pointerEvents = "none";
+        feedbackButton.style.color = Config.MAIN_GREEN;
+
+        experimentResult.saveFeedback(feedback);
+        
+        console.log(this.experiment);
+
+        //self.closeExperiment();
+
+    }
+    
 
     initCondition(){
 
         if(this.currentCondition == 1){
 
             var condition = firstCondition;
+            experimentResult.addTimestamp("firstConditionStarted", new Date().toISOString());
 
         } else {
             var condition = secondCondition;
+            experimentResult.addTimestamp("secondConditionStarted", new Date().toISOString());
         }
     
         instructionDiv.style.display = "none";
@@ -184,6 +210,20 @@ class AppManager {
         }
         
         
+    }
+
+    closeExperiment(){
+        var request = new XMLHttpRequest();
+            request.onreadystatechange = function() { 
+    
+                if (request.readyState == 4 && request.status == 200){
+                    console.log(request.responseText);
+                } 
+                    
+            }
+            request.open("GET", `/api/experiment/:${experiment.id}/close`, true); 
+            request.send(experiment);
+      
     }
 
     //source: https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid

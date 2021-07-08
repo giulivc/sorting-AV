@@ -40,7 +40,14 @@ class DataController {
 
         sizeSlider.addEventListener("input", (event) => this.onSizeInput());
         sizeInput.addEventListener ("change", function () {
-            sizeSlider.value = this.value;
+            
+            if(!isNaN(this.value.trim())){
+                sizeSlider.value = this.value.trim();
+            }
+
+            this.value = sizeSlider.value;
+            
+            
          });
 
         customArrayInputBox = document.getElementById("custom-input");
