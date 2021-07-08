@@ -119,10 +119,8 @@ class AppManager {
             lastPage.style.display = "block";
     
             self.experiment.results = experimentResult;
-    
-            console.log(self.experiment);
-
-            //self.closeExperiment();
+            
+            self.closeExperiment();
     
         }
     
@@ -142,10 +140,8 @@ class AppManager {
         feedbackButton.style.color = Config.MAIN_GREEN;
 
         experimentResult.saveFeedback(feedback);
-        
-        console.log(this.experiment);
 
-        //self.closeExperiment();
+        self.closeExperiment();
 
     }
     

@@ -19,7 +19,7 @@ function init(){
 
 function getExperiment(){
 
-    /*var request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     request.onreadystatechange = function() { 
 
         if (request.readyState == 4 && request.status == 200){
@@ -29,30 +29,9 @@ function getExperiment(){
             
     }
     request.open("GET", "/api/experiments/random" , true); 
-    request.send();*/
+    request.send();
 
-    // example
-    var experiment = `{ 
-        "id":"1234567890",
-        "state":"open",
-        "startedAt": null,
-        "conditions":[
-           {
-              "mode":"base",
-              "algorithm":"bubble-sort"
-           },
-           {
-              "mode":"data",
-              "algorithm":"insertion-sort"
-           }
-        ],
-        "currentParticipant": null,
-        "results":{
-           "data": null
-        }
-     }`;
-    
-    return JSON.parse(experiment);
+    return experiment;
 
 }
 
