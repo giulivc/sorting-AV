@@ -1,25 +1,16 @@
 {
-  "name": "sorting-av",
-  "version": "1.0.0",
-  "description": "a visualization tool for sorting algorithms",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js ./app 8000"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/giulivc/sorting-AV.git"
-  },
-  "author": "Giulia von Canal <giulivcanal@googlemail.com>",
-  "license": "ISC",
-  "homepage": "https://github.com/giulivc/sorting-AV#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "uuid-random": "^1.3.2",
-    "uuidv4": "^6.2.3"
-  }
+    "name": "experiment-manager",
+    "version": "0.0.1",
+    "description": "A Node.js plattform to run online experiments with the AlgoVisualizer",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
+    },
+    "type": "module",
+    "author": "Alexander Bazo <alexanderbazo@googlemail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
 }

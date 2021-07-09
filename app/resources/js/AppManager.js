@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Config from "./utils/Config.js";
 import Questionnaire from "./experiment/Questionnaire.js";
 import VisualizationView from "./ui/VisualizationView.js";
@@ -7,15 +8,12 @@ import ExperimentResult from "./experiment/ExperimentResult.js";
 
 var firstPage, 
     surveyDiv, visualizationDiv, instructionDiv,
-    lastPage;
-
-var firstCondition, secondCondition,
+    lastPage,
+    firstCondition, secondCondition,
     experimentResult,
     visualizationView, quiz,
-    animationController;
-
-var self;
-
+    animationController,
+    self;
 
 class AppManager {
 
@@ -35,22 +33,21 @@ class AppManager {
         instructionDiv = document.getElementById("instruction");
         lastPage = document.getElementById("last-page");
 
-        experimentResult = new ExperimentResult();
+        experimentResult = new ExperimentResult(this.experiment.startedAt);
         
     }
 
     startQuestionnaire(){
-
-        firstPage.style.display = "none";
-        surveyDiv.style.display = "block";
     
         var questionnaire = new Questionnaire();
         questionnaire.addOnCompleteListener(this.processQuestionnaireData);
 
-        experimentResult.addTimestamp("questionnaireStarted", new Date().toISOString());
+        firstPage.style.display = "none";
+        surveyDiv.style.display = "block";
+
+        experimentResult.addTimestamp("questionnaireStarted", Date.now());
 
     }
-
 
     processQuestionnaireData(sender) {
         var questionnaireData = sender.data;
@@ -73,10 +70,9 @@ class AppManager {
             case Config.SELECTIONSORT: 
                 return "SelectionSort";
             default: 
-                return;
+                return "";
         }
     }
-
 
     startQuiz(){
 
@@ -88,10 +84,10 @@ class AppManager {
         quiz = new Quiz(visualizationView.getAlgorithm());
         quiz.addOnCompleteListener(this.processQuizData);
 
-        if(this.currentCondition == 1){
-            experimentResult.addTimestamp("firstQuizStarted", new Date().toISOString());
+        if(this.currentCondition === 1){
+            experimentResult.addTimestamp("firstQuizStarted", Date.now());
         } else {
-            experimentResult.addTimestamp("secondQuizStarted", new Date().toISOString());
+            experimentResult.addTimestamp("secondQuizStarted", Date.now());
         }
         
     }
@@ -102,10 +98,10 @@ class AppManager {
     
         surveyDiv.innerHTML = "";
     
-        if(self.currentCondition == 1){
+        if(self.currentCondition === 1){
     
             experimentResult.saveQuizData(firstCondition.algorithm, quizData);
-            experimentResult.addTimestamp("firstQuizCompleted", new Date().toISOString());
+            experimentResult.addTimestamp("firstQuizCompleted", Date.now());
     
             instructionDiv.style.display = "block";
             instructionDiv.querySelector("#algorithm").innerHTML = self.stringifyAlgorithm(secondCondition.algorithm);
@@ -113,19 +109,17 @@ class AppManager {
         } else {
     
             experimentResult.saveQuizData(secondCondition.algorithm, quizData);
-            experimentResult.addTimestamp("secondQuizCompleted", new Date().toISOString());
+            experimentResult.addTimestamp("secondQuizCompleted", Date.now());
 
-    
             lastPage.style.display = "block";
     
             self.experiment.results = experimentResult;
-            
             self.closeExperiment();
+            self.experiment.state = "closed";
     
         }
     
         self.currentCondition++;
-    
     }
 
     onFeedbackSend(){
@@ -141,21 +135,22 @@ class AppManager {
 
         experimentResult.saveFeedback(feedback);
 
-        self.closeExperiment();
-
+        self.updateExperiment();
+        
     }
-    
 
     initCondition(){
 
-        if(this.currentCondition == 1){
+        var condition;
 
-            var condition = firstCondition;
-            experimentResult.addTimestamp("firstConditionStarted", new Date().toISOString());
+        if(this.currentCondition === 1){
+
+            condition = firstCondition;
+            experimentResult.addTimestamp("firstConditionStarted", Date.now());
 
         } else {
-            var condition = secondCondition;
-            experimentResult.addTimestamp("secondConditionStarted", new Date().toISOString());
+            condition = secondCondition;
+            experimentResult.addTimestamp("secondConditionStarted", Date.now());
         }
     
         instructionDiv.style.display = "none";
@@ -175,7 +170,7 @@ class AppManager {
 
         animationController = new AnimationController(condition);
     
-        if(condition.mode == Config.MODE_BASELINE){
+        if(condition.mode === Config.MODE_BASELINE){
     
             let startButton = document.querySelector("#base-controller #start-button"),
                 pauseButton = document.querySelector("#base-controller #pause-button"),
@@ -196,7 +191,6 @@ class AppManager {
                 backwardBtn = document.getElementById("backward-button"),
                 forwardBtn = document.getElementById("forward-button");
     
-    
             startButton.addEventListener("click", (event) => animationController.play());
             pauseButton.addEventListener("click", (event) => animationController.pause());
             resetButton.addEventListener("click", (event) => animationController.reset());
@@ -205,29 +199,37 @@ class AppManager {
             forwardBtn.addEventListener("click", (event) => animationController.stepForward());
         }
         
-        
     }
 
     closeExperiment(){
         var request = new XMLHttpRequest();
-            request.onreadystatechange = function() { 
-    
-                if (request.readyState == 4 && request.status == 200){
-                    console.log(request.responseText);
-                } 
-                    
-            }
-            request.open("GET", `/api/experiment/:${experiment.id}/close`, true); 
-            request.send(experiment);
+
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status === 200){
+                console.log(request.responseText);
+            } 
+               
+        }
+        
+        request.open("POST", `/api/experiment/${this.experiment.id}/close`, true); 
+        request.setRequestHeader("Content-type", "application/json");
+        request.send(JSON.stringify(this.experiment));
       
     }
 
-    //source: https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
-    uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-        });
+    updateExperiment(){
+        var request = new XMLHttpRequest();
+        
+        request.onreadystatechange = function() { 
+            if (request.readyState === 4 && request.status === 200){
+                console.log(request.responseText);
+            } 
+               
+        };
+
+        request.open("POST", `/api/experiment/${this.experiment.id}`, true); 
+        request.setRequestHeader("Content-type", "application/json");
+        request.send(JSON.stringify(this.experiment));
     }
 
 }

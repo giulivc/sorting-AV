@@ -3,24 +3,22 @@ import QuizJSON from "../utils/QuizJSON.js";
 
 //class to create quiz according to previous visualized algorithm using SurveyJS
 
-
 class Quiz {
 
     constructor(algorithm){
 
         this.algorithm = algorithm;
 
+        // eslint-disable-next-line no-undef
         this.quiz = new Survey.Model(this.getQuizJSON(), "survey");
         this.editButton();
     }
-
 
     editButton(){
 
         document.querySelector(".sv-footer__complete-btn").value = "Fertig";
 
     }
-
  
     getQuizJSON(){
 
@@ -37,6 +35,8 @@ class Quiz {
             case Config.INSERTIONSORT:
                 quizJSON = QuizJSON.INSERTIONSORT;
                 break;
+            default: 
+                break;
         }
 
         return quizJSON;
@@ -45,7 +45,6 @@ class Quiz {
     addOnCompleteListener(callback){
         this.quiz.onComplete.add(callback);
     }
-
 
 }
 
