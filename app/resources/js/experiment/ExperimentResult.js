@@ -1,13 +1,13 @@
 class ExperimentResult{
 
-    constructor(){
+    constructor(startedAt){
         
         this.questionnaire = {};
         this.quizzes = {};
-        this.timestamps = {};
+        this.log = [];
+        this.startedAt = startedAt;
 
     }
-
 
     saveQuestionnaireData(data){
         Object.assign(this.questionnaire, data);
@@ -21,12 +21,22 @@ class ExperimentResult{
         this.feedback = feedback;
     }
 
-    addTimestamp(key, timestamp){
-        this.timestamps[key] = timestamp;
+    addTimestamp(key, value){
+        var logEntry = new LogData(key, value);
+        logEntry.delta = logEntry.value - this.startedAt;
+        this.log.push(logEntry);
     }
 
-    
+}
 
+class LogData {
+
+    constructor(key, value){
+
+        this.key = key; 
+        this.value = value;
+        
+    }
 }
 
 export default ExperimentResult;
