@@ -9,8 +9,10 @@ const CONDITIONS = ["step-through", "data", "speed"];
 let experiments;
 
 function loadExperimentsFromDisk(dataPath) {
+
     let files = fs.readdirSync(dataPath);
     experiments = [];
+
     files.forEach(function(file) {
         experiments.push(Experiment.fromFile(path.join(dataPath, file)))}
     );
@@ -41,6 +43,14 @@ function updateExperimentOnDisk(experiment) {
     }
     return new ExperimentMessage(`Experiment ${experiment.id} updated.`);
 }
+
+function updateClosedExperimentOnDisk(experiment) {
+    let filePath = path.join(Config.resultsDir, experiment.id + ".json"),
+        experimentAsJSON = JSON.stringify(experiment);
+    fs.writeFileSync(filePath, experimentAsJSON);
+    return new ExperimentMessage(`Appended data to experiment ${experiment.id}.`);
+}
+
 
 /**
  * Resets the given experiment in the live array ("experiments") and on disk so that it can be reused
@@ -99,6 +109,22 @@ class ExperimentManager {
 
     constructor() {
         loadExperimentsFromDisk(Config.dataDir);
+        // Regularly checks for idle experiments
+        setInterval(this.resetIdleExperiments, Config.idleExperimentsCheckInterval * 60000);
+    }
+
+    /**
+     * Resets all currently started experiments wich where not finished within the expected time frame. Called
+     * regularly to prevent prepared cases getting lost when users start but not finish experiments.
+     */
+     resetIdleExperiments() {
+        let now = Date.now(),
+            idleExperiments = experiments.filter(experiment => experiment.state === "in-use" && ((now - experiment.startedAt) > Config.experimentResetTime * 60000));
+        for (let i = 0; i < idleExperiments.length; i++) {
+            let idleExperiment = idleExperiments[i];
+            resetExperimentWidthID(idleExperiment.id);
+        }
+
     }
 
 
@@ -166,6 +192,14 @@ class ExperimentManager {
     updateExperimentData(experiment) {
         return updateExperimentOnDisk(experiment);
     }
+
+     /**
+     * Updates closed experiment on disk
+     */
+      appendExperimentData(experiment) {
+        return updateClosedExperimentOnDisk(experiment);
+    }
+
 
     /**
      * Marks the given experiment as done an stores it results for further analysis. The 

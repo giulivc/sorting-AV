@@ -34,7 +34,7 @@ const QuestionnaireJSON = {
             {
                 "type":"text",
                 "name":"semester",
-                "title":"Semester",
+                "title":"Fachsemester",
                 "hideNumber": true,
                 "isRequired": true,
                 "inputType":"number",
@@ -43,14 +43,14 @@ const QuestionnaireJSON = {
             {
                 "type":"checkbox",
                 "name":"studyprogress",
-                "title":"Folgende Vorlesungen habe ich bereits besucht:",
+                "title":"Folgende Vorlesungen habe ich bereits erfolgreich besucht:",
                 "hideNumber": true,
                 "isRequired": true,
                 "choices": [
-                    {"value":"answer1","text":"Einführung in objektorientierte Programmierung (z.B. OOP)"},
-                    {"value":"answer2","text":"Einführung in anwendungsorientierte Programmierung (z.B. Android)"},
-                    {"value":"answer3","text":"Grundlagen Datenbankmodelierung (z.B. Daten effizient speichern und verarbeiten)"},
-                    {"value":"answer4","text":"Algorithmen & Datenstrukturen(z.B. ADP)"},
+                    {"value":"answer1","text":"eine Grundlagenvorlesung zur Einführung in die objektorientierte Programmierung (z.B. OOP)"},
+                    {"value":"answer2","text":"eine Grundlagenvorlesung zur Einführung in die Anwendungsprogrammierung (z.B. Android)"},
+                    {"value":"answer3","text":"eine Grundlagenvorlesung zu Algorithmen & Datenstrukturen (z.B. ADP)"},
+                    {"value":"answer4","text":"eine Grundlagenvorlesung zu Datenbanken & -verarbeitung (z.B. Daten effizient speichern und verarbeiten)"},
                 ],
             },
         ],
@@ -59,19 +59,19 @@ const QuestionnaireJSON = {
             {"type":"matrix","name":"self-assessment","maxWidth":"","title":"Gib an, wie sehr diese Aussagen auf dich zutreffen:","hideNumber":true,"isRequired":true,"isAllRowRequired" : true,"columns":
                 [{
                     value: 1,
-                    text: "Stimmt nicht",
+                    text: "Trifft nicht zu",
                 }, {
                     value: 2,
-                    text: "Eher nicht",
+                    text: "Trifft eher nicht zu",
                 }, {
                     value: 3,
-                    text: "Weder noch",
+                    text: "Neutral",
                 }, {
                     value: 4,
-                    text: "Eher schon",
+                    text: "Trifft eher zu",
                 }, {
                     value: 5,
-                    text: "Stimmt",
+                    text: "Trifft zu",
                 }],
                 "rows":
                 ["Ich habe mich bereits mit dem BubbleSort-Algorithmus auseinandergesetzt.",
