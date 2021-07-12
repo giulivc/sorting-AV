@@ -5,7 +5,7 @@ class ExperimentResult{
         this.questionnaire = {};
         this.quizzes = {};
         this.log = [];
-        this.startedAt = startedAt;
+        this.log.push(new LogData("startedAt", startedAt));
 
     }
 
@@ -23,7 +23,7 @@ class ExperimentResult{
 
     addTimestamp(key, value){
         var logEntry = new LogData(key, value);
-        logEntry.delta = logEntry.value - this.startedAt;
+        logEntry.delta = logEntry.value - this.log[0].value;
         this.log.push(logEntry);
     }
 

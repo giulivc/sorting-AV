@@ -291,6 +291,7 @@ body {
   #error-text {
       color: red;
       font-size: small;
+      visibility: hidden;
   }
 
 

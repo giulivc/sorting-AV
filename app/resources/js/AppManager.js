@@ -227,11 +227,12 @@ class AppManager {
                
         };
 
-        request.open("POST", `/api/experiment/${this.experiment.id}`, true); 
+        request.open("POST", `/api/experiment/${this.experiment.id}/append`, true); 
         request.setRequestHeader("Content-type", "application/json");
         request.send(JSON.stringify(this.experiment));
     }
 
 }
+
 
 export default AppManager;

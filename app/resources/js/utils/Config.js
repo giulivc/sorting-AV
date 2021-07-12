@@ -22,6 +22,8 @@ const Config = {
     MAIN_PURPLE: "#9980FF",
     MAIN_GREEN: "#BED733",
     LIGHT_PURPLE: "#D6CCFF",
+
+    NO_EXPERIMENTS_MSG : "Sorry, momentan benötigen wir keine Teilnehmer mehr! Trotzdem danke für deine Zeit!",
     
 
 };
