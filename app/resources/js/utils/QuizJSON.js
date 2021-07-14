@@ -31,8 +31,8 @@ const QuizJSON = {
                     "hideNumber": true,
                     "isRequired": true,
                     "choices": [
-                        {"value":"answer1","text":"In der i-ten Iteration ist der Abschnitt i ... n-1 des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Das größte Element im Abschnitt 0 ... i befindet sich an --ter Stelle."},
+                        {"value":"answer1","text":"Nach der i-ten Iteration ist der Abschnitt n-1-i ... n-1 des Arrays bereits sortiert."},
+                        {"value":"answer2","text":"Das größte Element im Abschnitt 0 ... i befindet sich an i-ter Stelle."},
                         {"value":"answer3","text":"Der Abschnitt 0 ... i-1 ist bereits sortiert"},
                         {"value":"answer4","text":"Der Eintrag des Arrays an der Stelle i ist kleiner gleich jedem Element in i ... n-1"},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
@@ -41,7 +41,7 @@ const QuizJSON = {
                 {
                     "type":"radiogroup",
                     "name":"question4",
-                    "title":"In jeder Iteration setzen wir ein beliebiges Element des noch unsortierten Bereichs an der richtigen Stelle ein.",
+                    "title":"In jeder Iteration wird das kleinste der noch ungeordneten Element gesucht und am rechten Ende des bereits sortierten Bereichs eingeordnet.",
                     "hideNumber": true,
                     "isRequired": true,
                     "choices": [
@@ -85,8 +85,8 @@ const QuizJSON = {
                     "hideNumber": true,
                     "isRequired": true,
                     "choices": [
-                        {"value":"answer1","text":"In der i-ten Iteration ist der Abschnitt i ... n-1 des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Das größte Element im Abschnitt 0 ... i befindet sich an --ter Stelle."},
+                        {"value":"answer1","text":"Nach der i-ten Iteration ist der Abschnitt n-1-i ... n-1 des Arrays bereits sortiert."},
+                        {"value":"answer2","text":"Das größte Element im Abschnitt 0 ... i befindet sich an i-ter Stelle."},
                         {"value":"answer3","text":"Der Abschnitt 0 ... i-1 ist bereits sortiert"},
                         {"value":"answer4","text":"Der Eintrag des Arrays an der Stelle i ist kleiner gleich jedem Element in i ... n-1"},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
@@ -95,7 +95,7 @@ const QuizJSON = {
                 {
                     "type":"radiogroup",
                     "name":"question4",
-                    "title":"In jeder Iteration wird das kleinste der noch ungeordneten Element gesucht und am rechten Ende des bereits sortierten Bereichs eingeordnet.",
+                    "title":"In jeder Iteration setzen wir ein beliebiges Element des noch unsortierten Bereichs an der richtigen Stelle ein.",
                     "hideNumber": true,
                     "isRequired": true,
                     "choices": [
@@ -139,8 +139,8 @@ const QuizJSON = {
                     "hideNumber": true,
                     "isRequired": true,
                     "choices": [
-                        {"value":"answer1","text":"In der i-ten Iteration ist der Abschnitt i ... n-1 des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Das größte Element im Abschnitt 0 ... i befindet sich an --ter Stelle."},
+                        {"value":"answer1","text":"Nach der i-ten Iteration ist der Abschnitt n-1-i ... n-1 des Arrays bereits sortiert."},
+                        {"value":"answer2","text":"Das größte Element im Abschnitt 0 ... i befindet sich an i-ter Stelle."},
                         {"value":"answer3","text":"Der Abschnitt 0 ... i-1 ist bereits sortiert"},
                         {"value":"answer4","text":"Der Eintrag des Arrays an der Stelle i ist kleiner gleich jedem Element in i ... n-1"},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
