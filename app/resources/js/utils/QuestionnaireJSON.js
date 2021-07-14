@@ -78,7 +78,7 @@ const QuestionnaireJSON = {
                 "Ich habe mich bereits mit dem SelectionSort-Algorithmus auseinandergesetzt.",
                 "Ich habe mich bereits mit dem InsertionSort-Algorithmus auseinandergesetzt.",
                 "Ich kann den Ablauf verschiedener Sortieralgorithmen mit Worten beschreiben.",
-                "Wenn mir die Funktionsweise eines Sortieralgorithmus beschrieben wird kann ich diesen beim Namen nennen.",
+                "Wenn mir die Funktionsweise eines Sortieralgorithmus beschrieben wird, kann ich diesen beim Namen nennen.",
                 "Ich kann Sortieralgorithmen anhand ihrer Beschreibung namentlich unterscheiden."]}],
         "title":"Selbsteinschätzung"}],
         "showPageTitles":false,
