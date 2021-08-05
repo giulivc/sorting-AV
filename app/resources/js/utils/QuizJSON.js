@@ -20,7 +20,7 @@ const QuizJSON = {
                     "choices": [
                         {"value":"answer1","text":"Der Spieler nimmt eine Karte nach der anderen auf und sortiert sie in die bereits aufgenommenen Karten ein."},
                         {"value":"answer2","text":"Der Spieler nimmt zuerst alle Karten auf und fängt dann an zu sortieren, indem er benachbarte Karten solange vertauscht, bis alle in der richtigen Reihenfolge liegen."},
-                        {"value":"answer3","text":"Der Spieler nimmt die jeweils niedrigste der verbliebenen Karten auf und fügt sie rechts an die bereits aufgenommen Karten an."},
+                        {"value":"answer3","text":"Der Spieler nimmt die jeweils niedrigste der verbliebenen Karten auf und fügt sie rechts an die bereits aufgenommenen Karten an."},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
                     ],
                 },
@@ -32,7 +32,7 @@ const QuizJSON = {
                     "isRequired": true,
                     "choices": [
                         {"value":"answer1","text":"Im i-ten Durchlauf ist der Abschnitt (n-1-i) ... (n-1) des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 ist bereits sortiert"},
+                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert"},
                         {"value":"answer3","text":"Nach dem i-ten Durchlauf befindet sich das größte Element im Abschnitt 0 ... (n-1-i) an (n-1-i)-ter Stelle."},
                         {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)"},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
@@ -74,7 +74,7 @@ const QuizJSON = {
                     "choices": [
                         {"value":"answer1","text":"Der Spieler nimmt eine Karte nach der anderen auf und sortiert sie in die bereits aufgenommenen Karten ein."},
                         {"value":"answer2","text":"Der Spieler nimmt zuerst alle Karten auf und fängt dann an zu sortieren, indem er benachbarte Karten solange vertauscht, bis alle in der richtigen Reihenfolge liegen."},
-                        {"value":"answer3","text":"Der Spieler nimmt die jeweils niedrigste der verbliebenen Karten auf und fügt sie rechts an die bereits aufgenommen Karten an."},
+                        {"value":"answer3","text":"Der Spieler nimmt die jeweils niedrigste der verbliebenen Karten auf und fügt sie rechts an die bereits aufgenommenen Karten an."},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
                     ],
                 },
@@ -86,7 +86,7 @@ const QuizJSON = {
                     "isRequired": true,
                     "choices": [
                         {"value":"answer1","text":"Im i-ten Durchlauf ist der Abschnitt (n-1-i) ... (n-1) des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 ist bereits sortiert"},
+                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert"},
                         {"value":"answer3","text":"Nach dem i-ten Durchlauf befindet sich das größte Element im Abschnitt 0 ... (n-1-i) an (n-1-i)-ter Stelle."},
                         {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)"},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
@@ -128,7 +128,7 @@ const QuizJSON = {
                     "choices": [
                         {"value":"answer1","text":"Der Spieler nimmt eine Karte nach der anderen auf und sortiert sie in die bereits aufgenommenen Karten ein."},
                         {"value":"answer2","text":"Der Spieler nimmt zuerst alle Karten auf und fängt dann an zu sortieren, indem er benachbarte Karten solange vertauscht, bis alle in der richtigen Reihenfolge liegen."},
-                        {"value":"answer3","text":"Der Spieler nimmt die jeweils niedrigste der verbliebenen Karten auf und fügt sie rechts an die bereits aufgenommen Karten an."},
+                        {"value":"answer3","text":"Der Spieler nimmt die jeweils niedrigste der verbliebenen Karten auf und fügt sie rechts an die bereits aufgenommenen Karten an."},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
                     ],
                 },
@@ -140,7 +140,7 @@ const QuizJSON = {
                     "isRequired": true,
                     "choices": [
                         {"value":"answer1","text":"Im i-ten Durchlauf ist der Abschnitt (n-1-i) ... (n-1) des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 ist bereits sortiert"},
+                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert"},
                         {"value":"answer3","text":"Nach dem i-ten Durchlauf befindet sich das größte Element im Abschnitt 0 ... (n-1-i) an (n-1-i)-ter Stelle."},
                         {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)"},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
