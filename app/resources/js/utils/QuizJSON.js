@@ -32,9 +32,9 @@ const QuizJSON = {
                     "isRequired": true,
                     "choices": [
                         {"value":"answer1","text":"Im i-ten Durchlauf ist der Abschnitt (n-1-i) ... (n-1) des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert"},
+                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert."},
                         {"value":"answer3","text":"Nach dem i-ten Durchlauf befindet sich das größte Element im Abschnitt 0 ... (n-1-i) an (n-1-i)-ter Stelle."},
-                        {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)"},
+                        {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)."},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
                     ]
                 },
@@ -86,9 +86,9 @@ const QuizJSON = {
                     "isRequired": true,
                     "choices": [
                         {"value":"answer1","text":"Im i-ten Durchlauf ist der Abschnitt (n-1-i) ... (n-1) des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert"},
+                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert."},
                         {"value":"answer3","text":"Nach dem i-ten Durchlauf befindet sich das größte Element im Abschnitt 0 ... (n-1-i) an (n-1-i)-ter Stelle."},
-                        {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)"},
+                        {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)."},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
                     ],
                 },
@@ -140,9 +140,9 @@ const QuizJSON = {
                     "isRequired": true,
                     "choices": [
                         {"value":"answer1","text":"Im i-ten Durchlauf ist der Abschnitt (n-1-i) ... (n-1) des Arrays bereits sortiert."},
-                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert"},
+                        {"value":"answer2","text":"Im i-ten Durchlauf ist der Abschnitt 0 ... i-1 bereits sortiert."},
                         {"value":"answer3","text":"Nach dem i-ten Durchlauf befindet sich das größte Element im Abschnitt 0 ... (n-1-i) an (n-1-i)-ter Stelle."},
-                        {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)"},
+                        {"value":"answer4","text":"Nach dem i-ten Durchlauf ist der Eintrag des Arrays an der Stelle i kleiner gleich jedem Element in i ... (n-1)."},
                         {"value":"noanswer","text":"Diese Frage kann ich nicht beantworten."},
                     ],
                 },
