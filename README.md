@@ -14,4 +14,4 @@ Closed experiment JSON files will be saved in `data/done`.
 
 ## Hosting
 
-application client is updated to 'https://algorithms.software-engineering.education/ via WebHook.
+application client is updated to https://algorithms.software-engineering.education/ via WebHook.
