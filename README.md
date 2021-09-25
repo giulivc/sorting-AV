@@ -1,5 +1,5 @@
 # sorting-AV
-experiment application for visualization tools of sorting algorithms
+experiment application client for visualization tools of sorting algorithms
 
 ## Local Testing
 
@@ -8,6 +8,10 @@ experiment application for visualization tools of sorting algorithms
 3. Copy open experiment JSON files into `data/open` (create folder if not exists)
 4. Create folder `data/done` if not exists
 5. Run `npm start`
-6. Start experiment on `http://localhost:8001/app/`
+6. Start experiment on http://localhost:8001/app/
 
 Closed experiment JSON files will be saved in `data/done`.
+
+## Hosting
+
+application client is updated to 'https://algorithms.software-engineering.education/ via WebHook.
