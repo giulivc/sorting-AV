@@ -1,5 +1,5 @@
-# sorting-AV
-experiment application client for visualization tools of sorting algorithms
+# sorting-visualizer-apparatus
+test apparatus client for visualization tools of sorting algorithms
 
 ## Local Testing
 
